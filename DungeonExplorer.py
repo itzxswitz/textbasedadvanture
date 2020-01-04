@@ -88,13 +88,13 @@ def command():
                               if current_room.up == "none":
                                     print("You cannot go that way.")
                               else:
-                                    current_room == current_room.get_left()
+                                    current_room == current_room.get_left(current_room)
                                     return
                         elif movement.lower == "down" or "south":
                               if current_room.up == "none":
                                     print("You cannot go that way.")
                               else:
-                                    current_room == current_room.get_right()
+                                    current_room == current_room.get_right(current_room)
                                     return
                         else:
                               print("That is not a valid direction. Up/north, down/south, left/west, or right/east are all valid directions.")
