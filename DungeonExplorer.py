@@ -148,6 +148,6 @@ describe_weapon()
 equip_weapon()
 describe_armor()
 equip_armor()
-current_room = Room.get(zonemap("r1"))
+current_room = Room(zonemap("r1"))
 command()
 
