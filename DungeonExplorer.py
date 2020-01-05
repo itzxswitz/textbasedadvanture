@@ -58,47 +58,51 @@ def describe_armor():
       print ("You are currently wearing " + armor.name + " that does " + str(armor.block) + " points of protection. It has " + str(armor.durability) + " hitpoints left.")
 
 
-def command(current_room):
-      while player.health > 0:
-            print("What would you like to do?")
-            answer = input()
-            if answer == "look":
-                  print (Room.zonemap.current_room.description)
-            elif answer == "examine":
-                  #examine weapon, inventory, armor, room, items
-                  current_room.examine_room()
-            elif answer == "go":
-                  while True:
-                        print ("Which direction would you like to go?")
-                        movement = input()
-                        if movement.lower == "up" or "north":
-                              if current_room.up == "none":
-                                    print("You cannot go that way.")
-                              else:
-                                    current_room == current_room.get_up(current_room)
-                                    return
-                        elif movement.lower == "down" or "south":
-                              if current_room.up == "none":
-                                    print("You cannot go that way.")
-                              else:
-                                    down = ""
-                                    down == current_room.get_down(current_room)
-                                    current_room = Room.zonemap(down)
-                                    return
-                        elif movement.lower == "down" or "south":
-                              if current_room.up == "none":
-                                    print("You cannot go that way.")
-                              else:
-                                    current_room == current_room.get_left()
-                                    return
-                        elif movement.lower == "down" or "south":
-                              if current_room.up == "none":
-                                    print("You cannot go that way.")
-                              else:
-                                    current_room == current_room.get_right()
-                                    return
-                        else:
-                              print("That is not a valid direction. Up/north, down/south, left/west, or right/east are all valid directions.")
+def command(current_room, new=None):
+    while player.health > 0:
+        print("What would you like to do?")
+        answer = input()
+        if answer == "look":
+            desc = current_room["description"]
+            print(desc)
+        elif answer == "examine":
+            # add ability to examine weapon, inventory, armor, room, items etc.
+            print(current_room["examine"])
+        elif answer == "go":
+            while True:
+                print("Which direction would you like to go?")
+                movement = input()
+                if movement.lower == "up" or "north":
+                    if current_room["up"] == "none":
+                        print("You cannot go that way.")
+                    else:
+                        new = current_room["up"]
+                        current_room = Room.zonemap[new]
+                        return
+                elif movement.lower == "down" or "south":
+                    if current_room["down"] == "none":
+                        print("You cannot go that way.")
+                    else:
+                        new = current_room["down"]
+                        current_room = Room.zonemap[new]
+                        return
+                elif movement.lower == "left" or "west":
+                    if current_room["left"] == "none":
+                        print("You cannot go that way.")
+                    else:
+                        new = current_room["left"]
+                        current_room = Room.zonemap[new]
+                        return
+                elif movement.lower == "right" or "east":
+                    if current_room["right"] == "none":
+                        print("You cannot go that way.")
+                    else:
+                        new = current_room["right"]
+                        current_room = Room.zonemap[new]
+                        return
+                else:
+                    print(
+                        "That is not a valid direction. Up/north, down/south, left/west, or right/east are all valid directions.")
 
 ######## Game commences ############
 #Introduce character and allowcate points
