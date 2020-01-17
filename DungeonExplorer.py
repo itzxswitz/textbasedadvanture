@@ -1,21 +1,3 @@
-from armor import Armor
-from player import Player
-from rooms import Room
-from weapon import Weapon
-
-######## notes on to add
-# upon entrance spawn enemies, upon examine spawn items and armor?
-# armor and weapon durability depletes with battle, when hit deplete armor, when attacking deplete weapon
-# can i create enemies using the player class?
-# can room be represented by calling a single variable, or do i need to input every variable?
-# do we need charisma? - for the king only, can convince him to leave
-# consider adding separation lines to the text for easier use.
-# on combat: do i add misses and critical hits? too much rng?
-# equip will not be an input as it is already asked upon examine
-# go/move, eat, examine, attack, pickup, quit
-# save?
-
-def play():
     # functions used throughout the program
     #update the current room's description and display it
     def describe_room():
@@ -23,8 +5,8 @@ def play():
         print("\nYou have entered " + desc)
     # describe the items the character currently has
     def describe_weapon():
-        print("You currently have " + equipped_weapon.name + " that deal a damage of " + str(
-            equipped_weapon.damage) + " with a durability of " + str(equipped_weapon.durability))
+        print("You currently have " + equipped_weapon["name"] + " that deal a damage of " + str(
+            equipped_weapon["damage"]) + " with a durability of " + str(equipped_weapon["durability"]))
 
     def describe_armor():
         print("You are currently wearing " + armor.name + " that does " + str(
@@ -32,14 +14,13 @@ def play():
 
     # equip or pick up the items on the ground
     def equip_weapon():
-
-        ground_weapon = Weapon.get_weapon("weapon")
+        ground_weapon = Weapon.get_weapon(object)
         while True:
             print("Would you like to equip this weapon? Yes/No:")
             answer = input()
             if answer.lower() == "yes":
                 equipped_weapon = ground_weapon
-                player.update_damage(equipped_weapon.damage)
+                player.update_damage(equipped_weapon["damage"])
                 return
             elif answer.lower() == "no":
                 print("You leave the " + ground_weapon.name + " behind.")
@@ -109,7 +90,8 @@ def play():
         "_______________________________________________________________________________________________________________________")
     current_room = Room.zonemap["r1"]
     equipped_weapon = Weapon.weapons["fists"]
-    player.update_damage(equipped_weapon.damage)
+    print (equipped_weapon)
+    player.update_damage(equipped_weapon["damage"])
     armor = Armor("rugged cloth", 0, player.health)
     describe_room()
     describe_weapon()
@@ -180,22 +162,3 @@ def play():
             exit()
         else:
             print("Invalid input, you may travel using 'go', examine something using 'examine', look around using 'look'")
-
-
-running = True
-while running == True:
-    print("Welcome to Dungeon Explorer! A text based adventure full of combat, exploration, and heroism!"
-          "\n\n"
-          "1. Play\n"
-          "2. Quit\n\n"
-          "What would you like to do?")
-    answer = input()
-    if answer.lower() in ["1", "play"]:
-    ######## Game commences ############
-        play()
-    elif answer.lower() in ["2", "quit"]:
-    ######## Quits the game ###########
-        exit()
-        running = False
-    else:
-        print("Invalid response.")
